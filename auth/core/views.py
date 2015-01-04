@@ -1,6 +1,8 @@
 from flask import render_template, redirect, url_for
 from flask.ext.login import login_required
 
+from auth.utils import send_email
+
 from auth.core import core
 from auth.core.forms import LoginForm, RegistrationForm
 
@@ -18,6 +20,10 @@ def login():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        # Create user model
+        # Save user
+        # Send the new user their activation code
+        # send_email()
         return redirect(url_for('core.post_register'))
     return render_template("core_register.html", form=form)
 

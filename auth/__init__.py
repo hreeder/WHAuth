@@ -6,13 +6,8 @@ from flask.ext.login import LoginManager
 from flask.ext.migrate import Migrate
 from flask.ext.sqlalchemy import SQLAlchemy
 
-from auth.core import core
-
 app = Flask(__name__)
 app.config.from_object("config")
-
-# Load Blueprints
-app.register_blueprint(core)
 
 # Load Extensions
 assets = Environment(app)
@@ -24,6 +19,11 @@ migrate = Migrate(app, db)
 if app.config['EMAIL_METHOD'].lower() == "smtp":
     from flask.ext.mail import Mail
     mail = Mail(app)
+
+# Load Blueprints
+from auth.core import core
+
+app.register_blueprint(core)
 
 # Configure flask-login
 login_manager.login_view = "core.login"

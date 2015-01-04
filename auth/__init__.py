@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from flask.ext.assets import Bundle, Environment
 from flask.ext.login import LoginManager
+from flask.ext.sqlalchemy import SQLAlchemy
 
 from auth.core import core
 
@@ -14,7 +15,13 @@ app.register_blueprint(core)
 
 # Load Extensions
 assets = Environment(app)
+db = SQLAlchemy(app)
 login_manager = LoginManager(app)
+
+# Optional Extensions
+if app.config['EMAIL_METHOD'].lower() == "smtp":
+    from flask.ext.mail import Mail
+    mail = Mail(app)
 
 # Configure flask-login
 login_manager.login_view = "core.login"

@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from flask.ext.assets import Bundle, Environment
 from flask.ext.login import LoginManager
+from flask.ext.migrate import Migrate
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from auth.core import core
@@ -17,6 +18,7 @@ app.register_blueprint(core)
 assets = Environment(app)
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
+migrate = Migrate(app, db)
 
 # Optional Extensions
 if app.config['EMAIL_METHOD'].lower() == "smtp":

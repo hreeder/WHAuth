@@ -58,3 +58,6 @@ target/
 
 # Configuration
 config.py
+
+# Debug DB
+app.db

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} | WHAuth</title>
+    {% assets "css_all" %}
+        <link href="{{ ASSET_URL }}" rel="stylesheet">
+    {% endassets %}
+</head>
+<body>
+<!-- Begin Navbar -->
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">WHAuth</a>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated() %}
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Skull <b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="">Logout</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li{% if request.path.startswith('/login') %} class="active"{% endif %}><a href="/login">Login</a></li>
+                    <li{% if request.path.startswith('/register') %} class="active"{% endif %}><a href="/register">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End Nav -->
+
+<!-- Main -->
+<div class="container">
+    {% block main %}
+    {% endblock %}
+</div>
+
+<!-- Javascript -->
+{% assets "js_all" %}
+<script src="{{ ASSET_URL }}"></script>
+{% endassets %}
+</body>
+</html>

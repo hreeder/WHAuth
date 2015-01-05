@@ -15,3 +15,7 @@ class RegistrationForm(Form):
     email = StringField('E-Mail', validators=[InputRequired(), Email()])
     password = PasswordField('Password', validators=[InputRequired(), EqualTo('confirm', message='Passwords must match!')])
     confirm = PasswordField('Confirm Password')
+
+class NewPasswordForm(Form):
+    password = PasswordField('New Password', validators=[InputRequired(), EqualTo('confirm', message='Passwords must match!')])
+    confirm = PasswordField('Confirm Password')

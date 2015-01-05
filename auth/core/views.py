@@ -6,7 +6,7 @@ from auth import app, db
 from auth.utils import send_email, flash_errors
 
 from auth.core import core
-from auth.core.forms import LoginForm, RegistrationForm, ForgotPasswordForm
+from auth.core.forms import LoginForm, RegistrationForm, ForgotPasswordForm, NewPasswordForm
 from auth.core.models.user import User
 
 @core.route("/")
@@ -120,8 +120,53 @@ def validate_registration(username, key):
 
     return redirect(url_for('core.login'))
 
-@core.route("/login/forgot_password")
+@core.route("/login/forgot_password", methods=["GET", "POST"])
 def forgotten_password():
     form = ForgotPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data, email=form.email.data).first()
+        if not user:
+            flash("Account not found!", "danger")
+            return redirect(url_for('core.forgotten_password'))
+        user.generate_activation_key()
 
+        send_email(
+            [user.email],
+            "[WHAuth] Password Reset Link",
+            render_template(
+                'core_email_registration.txt',
+                username=user.username,
+                siteurl=url_for("core.home", _external=True),
+                activationurl=url_for("core.reset_password", username=user.username, key=user.activation_key, _external=True)
+            ),
+            render_template(
+                'core_email_registration.html',
+                username=user.username,
+                siteurl=url_for("core.home", _external=True),
+                activationurl=url_for("core.reset_password", username=user.username, key=user.activation_key, _external=True)
+            )
+        )
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash("An email has been dispatched and you will have a password reset link shortly", "success")
+        return redirect(url_for("core.login"))
+    else:
+        flash_errors(form)
     return render_template('core_forgot_password.html', form=form)
+
+@core.route("/login/reset/<username>/<key>", methods=['GET', 'POST'])
+def reset_password(username, key):
+    user = User.query.filter_by(username=username, activation_key=key, active=True).first_or_404()
+    form = NewPasswordForm()
+    if form.validate_on_submit():
+        user.activate()
+
+        user.set_password(form.password.data)
+
+        flash('Password changed successfully!', 'success')
+        return redirect(url_for('core.home'))
+    else:
+        flash_errors(form)
+    return render_template('core_reset_password.html', form=form)

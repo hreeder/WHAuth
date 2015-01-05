@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+
+{% block main %}
+    <h2>Your Profile: {{ current_user.get_display_name }}</h2>
+{% endblock %}

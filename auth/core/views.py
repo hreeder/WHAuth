@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash, request
-from flask.ext.login import login_required, login_user
+from flask.ext.login import login_required, login_user, logout_user
 
 from auth import db
 
@@ -32,6 +32,12 @@ def login():
         else:
             flash("Your password was incorrect!", "danger")
     return render_template("core_login.html", form=form)
+
+@core.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("core.home"))
 
 @core.route("/register", methods=["GET", "POST"])
 def register():

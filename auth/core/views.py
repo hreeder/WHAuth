@@ -3,10 +3,10 @@ from flask.ext.login import login_required, login_user, logout_user
 
 from auth import db
 
-from auth.utils import send_email
+from auth.utils import send_email, flash_errors
 
 from auth.core import core
-from auth.core.forms import LoginForm, RegistrationForm
+from auth.core.forms import LoginForm, RegistrationForm, ForgotPasswordForm
 from auth.core.models.user import User
 
 @core.route("/")
@@ -31,6 +31,8 @@ def login():
             return redirect(request.args.get("next") or url_for("core.home"))
         else:
             flash("Your password was incorrect!", "danger")
+    else:
+        flash_errors(form)
     return render_template("core_login.html", form=form)
 
 @core.route("/logout")
@@ -62,6 +64,8 @@ def register():
         # Send the new user their activation code
         # send_email()
         return redirect(url_for('core.post_register'))
+    else:
+        flash_errors(form)
     return render_template("core_register.html", form=form)
 
 @core.route("/register/validating")
@@ -77,3 +81,9 @@ def validate_registration(username, key):
     db.session.commit()
 
     return redirect(url_for('core.login'))
+
+@core.route("/login/forgot_password")
+def forgotten_password():
+    form = ForgotPasswordForm()
+
+    return render_template('core_forgot_password.html', form=form)

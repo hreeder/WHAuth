@@ -1,6 +1,6 @@
 from threading import Thread
 
-from flask import current_app
+from flask import current_app, flash
 
 
 def send_email(to, subject, text_body, html_body):
@@ -46,3 +46,12 @@ def send_email_mailgun(to, subject, text_body, html_body):
     }
 
     thr = Thread(target=send_email_mailgun_async, args=[current_app, data])
+
+
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ))

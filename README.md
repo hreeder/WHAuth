@@ -41,3 +41,10 @@ Finally, rename the configuration file to config.py and edit to your liking:
 ```
 cp config.dist.py config.py
 ```
+
+### A note about Databases
+I've deliberately not included a database driver in the requirements.txt to allow you to choose your own.
+The app itself is being built against MariaDB, using the OurSQL library. Because I'm using Python 3, installation can be done by the following:
+```
+pip install https://launchpad.net/oursql/py3k/py3k-0.9.4/+download/oursql-0.9.4.zip
+```

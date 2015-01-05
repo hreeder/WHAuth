@@ -5,6 +5,9 @@ SECRET_KEY = os.urandom(64)
 # Set this to False in a production environment
 DEBUG = True
 
+# Force users to activate their account via E-Mail
+FORCE_EMAIL_ACTIVATION = False
+
 # ====== Database ======
 # Input the relevant database URI string for your application
 # Almost all major DB solutions are supported

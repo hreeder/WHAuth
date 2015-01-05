@@ -5,7 +5,7 @@ import random
 
 from flask.ext.login import UserMixin
 
-from auth import db
+from auth import db, login_manager
 
 
 class User(db.Model, UserMixin):
@@ -36,7 +36,7 @@ class User(db.Model, UserMixin):
         return bcrypt.hashpw(plaintext_password.encode('utf-8'), bcrypt.gensalt())
 
     def validate_password(self, plaintext_password):
-        return bcrypt.hashpw(plaintext_password.encode('utf-8'), self.password) == self.password
+        return bcrypt.hashpw(plaintext_password.encode('utf-8'), bytes(self.password.encode('utf-8'))) == bytes(self.password.encode('utf-8'))
 
     def activate(self):
         self.active = True
@@ -59,3 +59,7 @@ class User(db.Model, UserMixin):
             return self.display_name
         else:
             return self.username
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.filter_by(id=userid, active=True).first()

@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask.ext.login import login_required, login_user, logout_user
 
-from auth import db
+from auth import app, db
 
 from auth.utils import send_email, flash_errors
 
@@ -64,19 +64,42 @@ def register():
             password=form.password.data
         )
 
-        # Set activation key
-        new_user.generate_activation_key()
+        if app.config['FORCE_EMAIL_ACTIVATION']:
+            # Set activation key
+            new_user.generate_activation_key()
 
-        # Printing the validation URL, for debug times
-        print(url_for('core.validate_registration', username=new_user.username, key=new_user.activation_key))
+            # Printing the validation URL, for debug times
+            print(url_for('core.validate_registration', username=new_user.username, key=new_user.activation_key))
+
+            # Send the new user their activation code
+            send_email(
+                [new_user.email],
+                "[WHAuth] Welcome to WHAuth, Please Activate Your Account",
+                render_template(
+                    'core_email_registration.txt',
+                    username=new_user.username,
+                    siteurl=url_for("core.home", _external=True),
+                    activationurl=url_for("core.validate_registration", username=new_user.username, key=new_user.activation_key, _external=True)
+                ),
+                render_template(
+                    'core_email_registration.html',
+                    username=new_user.username,
+                    siteurl=url_for("core.home", _external=True),
+                    activationurl=url_for("core.validate_registration", username=new_user.username, key=new_user.activation_key, _external=True)
+                )
+            )
+
+            post = url_for('core.post_register')
+        else:
+            new_user.activate()
+            flash('Account created, you may now log in', 'success')
+            post = url_for('core.home')
 
         # Save user
         db.session.add(new_user)
         db.session.commit()
 
-        # Send the new user their activation code
-        # send_email()
-        return redirect(url_for('core.post_register'))
+        return redirect(post)
     else:
         flash_errors(form)
     return render_template("core_register.html", form=form)

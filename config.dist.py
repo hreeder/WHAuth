@@ -10,10 +10,11 @@ DEBUG = True
 # Almost all major DB solutions are supported
 # For more information, and requirements, see here: http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html
 # For example - MySQL
-# SQLALCHEMY_DATABASE_URI = 'mysql://user:password@host/database'
+# SQLALCHEMY_DATABASE_URI = 'mysql+oursql://user:password@host/database'
 # PostgreSQL
 # SQLALCHEMY_DATABASE_URL = 'postgresql://user:password@host/database'
-SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
+# Don't use SQLite, it doesn't work.
+SQLALCHEMY_DATABASE_URI = 'mysql+oursql://user:password@localhost/database'
 
 # ====== Email =======
 # Define how Auth will send E-Mails

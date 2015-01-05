@@ -45,6 +45,18 @@ def logout():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        # Some extra validation - we should check to see if there's already a user registered with either that email
+        # or that username
+        existing_username = User.query.filter_by(username=form.username.data).first()
+        if existing_username:
+            flash("That username is already in use!", "danger")
+            return redirect(url_for("core.register"))
+
+        existing_email = User.query.filter_by(email=form.email.data).first()
+        if existing_email:
+            flash("That email address is already in use!", "danger")
+            return redirect(url_for("core.register"))
+
         # Create user model
         new_user = User(
             username=form.username.data,
@@ -54,7 +66,8 @@ def register():
 
         # Set activation key
         new_user.generate_activation_key()
-        print(new_user.activation_key)
+
+        # Printing the validation URL, for debug times
         print(url_for('core.validate_registration', username=new_user.username, key=new_user.activation_key))
 
         # Save user
@@ -79,6 +92,8 @@ def validate_registration(username, key):
 
     db.session.add(user)
     db.session.commit()
+
+    flash("User '%s' has now been activated and you may log in." % (username,), "success")
 
     return redirect(url_for('core.login'))
 

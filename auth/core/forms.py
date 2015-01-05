@@ -6,6 +6,10 @@ class LoginForm(Form):
     username = StringField('Username', validators=[InputRequired()])
     password = PasswordField('Password', validators=[InputRequired()])
 
+class ForgotPasswordForm(Form):
+    username = StringField('Username', validators=[InputRequired()])
+    email = StringField('E-Mail', validators=[InputRequired(), Email()])
+
 class RegistrationForm(Form):
     username = StringField('Username', validators=[InputRequired()])
     email = StringField('E-Mail', validators=[InputRequired(), Email()])

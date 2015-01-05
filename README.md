@@ -48,3 +48,8 @@ The app itself is being built against MariaDB, using the OurSQL library. Because
 ```
 pip install https://launchpad.net/oursql/py3k/py3k-0.9.4/+download/oursql-0.9.4.zip
 ```
+
+Once you have installed a database driver, and set SQLALCHEMY_DATABASE_URI in config.py, you can install the database:
+```
+python manage.py db upgrade
+```

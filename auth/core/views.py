@@ -170,3 +170,8 @@ def reset_password(username, key):
     else:
         flash_errors(form)
     return render_template('core_reset_password.html', form=form)
+
+@core.route("/profile")
+@login_required
+def profile():
+    return render_template('core_profile.html')

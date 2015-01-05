@@ -2,5 +2,14 @@
 {% block title %}Profile{% endblock %}
 
 {% block main %}
-    <h2>Your Profile: {{ current_user.get_display_name }}</h2>
+    <h2>Your Profile</h2>
+    <ul>
+        <li><b>Username</b>: {{ current_user.username }}</li>
+        <li><b>Display Name</b>: {{ current_user.get_display_name() }}</li>
+        <li><b>E-Mail Address</b>: {{ current_user.email }}</li>
+        <li><b>Registration Date</b>: {{ current_user.registration_date }}</li>
+    </ul>
+
+    <h3>Actions</h3>
+    <a class="btn btn-info" href="/profile/change_password">Change Password</a>
 {% endblock %}

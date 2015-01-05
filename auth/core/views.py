@@ -49,7 +49,7 @@ def register():
         new_user = User(
             username=form.username.data,
             email=form.email.data,
-            password=User.generate_password_hash(form.password.data)
+            password=form.password.data
         )
 
         # Set activation key

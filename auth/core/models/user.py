@@ -26,14 +26,13 @@ class User(db.Model, UserMixin):
         if email:
             self.email = email
         if password:
-            self.password = password
+            self.set_password(password)
 
         self.registration_date = datetime.datetime.utcnow()
         self.active = False
 
-    @staticmethod
-    def generate_password_hash(plaintext_password):
-        return bcrypt.hashpw(plaintext_password.encode('utf-8'), bcrypt.gensalt())
+    def set_password(self, plaintext_password):
+        self.password = bcrypt.hashpw(plaintext_password.encode('utf-8'), bcrypt.gensalt())
 
     def validate_password(self, plaintext_password):
         return bcrypt.hashpw(plaintext_password.encode('utf-8'), bytes(self.password.encode('utf-8'))) == bytes(self.password.encode('utf-8'))

@@ -1,10 +1,13 @@
 from flask import render_template, redirect, url_for
 from flask.ext.login import login_required
 
+from auth import db
+
 from auth.utils import send_email
 
 from auth.core import core
 from auth.core.forms import LoginForm, RegistrationForm
+from auth.core.models.user import User
 
 @core.route("/")
 @login_required
@@ -21,7 +24,21 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         # Create user model
+        new_user = User(
+            username=form.username.data,
+            email=form.email.data,
+            password=User.generate_password_hash(form.password.data)
+        )
+
+        # Set activation key
+        new_user.generate_activation_key()
+        print(new_user.activation_key)
+        print(url_for('core.validate_registration', username=new_user.username, key=new_user.activation_key))
+
         # Save user
+        db.session.add(new_user)
+        db.session.commit()
+
         # Send the new user their activation code
         # send_email()
         return redirect(url_for('core.post_register'))
@@ -30,3 +47,13 @@ def register():
 @core.route("/register/validating")
 def post_register():
     return render_template("core_post_register.html")
+
+@core.route("/register/validate/<username>/<key>")
+def validate_registration(username, key):
+    user = User.query.filter_by(username=username, activation_key=key, active=False).first_or_404()
+    user.activate()
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect(url_for('core.login'))

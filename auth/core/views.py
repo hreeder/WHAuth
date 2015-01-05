@@ -1,5 +1,5 @@
-from flask import render_template, redirect, url_for
-from flask.ext.login import login_required
+from flask import render_template, redirect, url_for, flash, request
+from flask.ext.login import login_required, login_user
 
 from auth import db
 
@@ -17,6 +17,20 @@ def home():
 @core.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(
+            username=form.username.data,
+            active=True
+        ).first()
+        if not user:
+            flash("User account not found!", "danger")
+            return redirect(url_for("core.login"))
+
+        if user.validate_password(form.password.data):
+            login_user(user)
+            return redirect(request.args.get("next") or url_for("core.home"))
+        else:
+            flash("Your password was incorrect!", "danger")
     return render_template("core_login.html", form=form)
 
 @core.route("/register", methods=["GET", "POST"])

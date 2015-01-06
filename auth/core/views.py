@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash, request
-from flask.ext.login import login_required, login_user, logout_user
+from flask.ext.login import login_required, login_user, logout_user, current_user
 
 from auth import app, db
 
@@ -175,3 +175,16 @@ def reset_password(username, key):
 @login_required
 def profile():
     return render_template('core_profile.html')
+
+@core.route("/profile/change_password", methods=["GET", "POST"])
+@login_required
+def change_password():
+    form = NewPasswordForm()
+    if form.validate_on_submit():
+        current_user.set_password(form.password.data)
+
+        flash('Password changed successfully!', 'success')
+        return redirect(url_for('core.profile'))
+    else:
+        flash_errors(form)
+    return render_template('core_change_password.html', form=form)

@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(64), unique=True)
     password = db.Column(db.String(128))
-    superuser = db.Column(db.Boolean)
+    superuser = db.Column(db.Boolean, default=False)
 
     registration_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     active = db.Column(db.Boolean, default=False)

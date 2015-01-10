@@ -1,5 +1,6 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, current_app
 from flask.ext.login import login_required, login_user, logout_user, current_user
+from flask.ext.principal import identity_changed, Identity
 
 from auth import app, db
 
@@ -28,6 +29,7 @@ def login():
 
         if user.validate_password(form.password.data):
             login_user(user)
+            identity_changed.send(current_app._get_current_object(), identity=Identity(user.id))
             return redirect(request.args.get("next") or url_for("core.home"))
         else:
             flash("Your password was incorrect!", "danger")

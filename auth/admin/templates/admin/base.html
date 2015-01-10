@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} | WHAuth Admin</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    {% block extracss %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/AdminLTE.css') }}" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="skin-black">
+    <header class="header">
+        <a class="logo" href="{{ url_for('admin.dashboard') }}">WHAuth Admin</a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <a class="navbar-btn sidebar-toggle" href="#" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-user"></i>
+                            <span>
+                                {{ current_user.get_display_name() }}
+                                <b class="caret"></b>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('core.home') }}">Return to WHAuth</a></li>
+                            <li><a href="{{ url_for('core.logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <aside class="left-side sidebar-offcanvas">
+            <section class="sidebar">
+                <ul class="sidebar-menu">
+                    <li{% if request.path == url_for('admin.dashboard') %} class="active"{% endif %}><a href="{{ url_for('admin.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                    <li{% if request.path.startswith(url_for('admin.list_users')) %} class="active"{% endif %}><a href="{{ url_for('admin.list_users') }}"><i class="fa fa-user"></i> Users</a></li>
+                    <li class="treeview">
+                        <a href="">
+                            <i class="fa fa-users"></i> Groups
+                            <i class="pull-right fa fa-angle-left"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="">
+                                <i class="fa fa-angle-double-right"></i>
+                                All Groups
+                            </a></li>
+                            <li><a href="">
+                                <i class="fa fa-angle-double-right"></i>
+                                Add a Group
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </aside>
+
+        <aside class="right-side">
+            <section class="content-header">
+                <h1>
+                    {% block heading %}{% endblock %}
+                    <small>{% block subheading %}{% endblock %}</small>
+                </h1>
+                <ol class="breadcrumb">
+                    {% block breadcrumbs %}{% endblock %}
+                </ol>
+            </section>
+            <section class="content">
+                {% block main %}{% endblock %}
+            </section>
+        </aside>
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/AdminLTE/app.js') }}"></script>
+    {% block extrajs %}{% endblock %}
+</body>
+</html>

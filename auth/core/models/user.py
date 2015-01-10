@@ -60,6 +60,17 @@ class User(db.Model, UserMixin):
         else:
             return self.username
 
+    def has_role(self, role):
+        if self.superuser:
+            return True
+        elif role in self.get_roles():
+            return True
+        else:
+            return False
+
+    def get_roles(self):
+        return []
+
 @login_manager.user_loader
 def load_user(userid):
     return User.query.filter_by(id=userid, active=True).first()

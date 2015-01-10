@@ -4,6 +4,16 @@
 {% block heading %}Users{% endblock %}
 {% block subheading %}All Users{% endblock %}
 
+{% block breadcrumbs %}
+    <li>
+        <a href="{{ url_for('admin.dashboard') }}">
+            <i class="fa fa-dashboard"></i>
+            Admin
+        </a>
+    </li>
+    <li class="active">Users</li>
+{% endblock %}
+
 {% block extracss %}
     <link href="{{ url_for('static', filename='css/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
@@ -29,7 +39,9 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Username</th>
+                                <th>Main Character</th>
                                 <th>EMail</th>
+                                <th>Active</th>
                                 <th>SuperUser</th>
                                 <th>Actions</th>
                             </tr>
@@ -38,7 +50,9 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Username</th>
+                                <th>Main Character</th>
                                 <th>EMail</th>
+                                <th>Active</th>
                                 <th>SuperUser</th>
                                 <th>Actions</th>
                             </tr>
@@ -49,9 +63,13 @@
                                 <tr>
                                     <td>{{ user.id }}</td>
                                     <td>{{ user.username }}</td>
+                                    <td>{{ user.display_name }}</td>
                                     <td>{{ user.email }}</td>
+                                    <td>{{ user.active }}</td>
                                     <td>{{ user.superuser }}</td>
-                                    <td></td>
+                                    <td>
+                                        <a class="btn btn-xs btn-primary" href="{{ url_for('admin.view_user', username=user.username) }}">View</a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>

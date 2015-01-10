@@ -1,0 +1,48 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ user.get_display_name() }}{% endblock %}
+{% block heading %}{{ user.get_display_name() }}{% endblock %}
+{% block subheading %}Viewing Profile{% endblock %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{{ url_for('admin.dashboard') }}">
+            <i class="fa fa-dashboard"></i>
+            Admin
+        </a>
+    </li>
+    <li><a href="{{ url_for('admin.list_users') }}">Users</a></li>
+    <li class="active">Profile: {{ user.get_display_name() }}</li>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="box box-info">
+                <div class="box-header">
+                    <h3 class="box-title">User Information</h3>
+                    <div class="box-tools pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-xs btn-default" data-toggle="dropdown" aria-expanded="false">Actions <b class="caret"></b></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url_for('admin.toggle_account_status', username=user.username) }}">{% if user.active %}Disable{% else %}Enable{% endif %} Account</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{ url_for('admin.toggle_superuser', username=user.username) }}">{% if user.superuser %}Remove{% else %}Make{% endif %} SuperUser</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <ul>
+                        <li><b>Username</b>: {{ user.username }}</li>
+                        <li><b>Main Character</b>: {{ user.display_name }}</li>
+                        <li><b>Email</b>: {{ user.email }}</li>
+                        <li><b>Active</b>: {{ user.active }}</li>
+                        <li><b>SuperUser</b>: {{ user.superuser }}</li>
+                        <li><b>Registration Date</b>: {{ user.registration_date }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

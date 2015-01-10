@@ -27,9 +27,11 @@ if app.config['EMAIL_METHOD'].lower() == "smtp":
 # Load Blueprints
 from auth.admin import admin
 from auth.core import core
+from auth.groups import groups
 
 app.register_blueprint(admin, url_prefix="/admin")
 app.register_blueprint(core)
+app.register_blueprint(groups, url_prefix="/groups")
 
 # Configure flask-login
 login_manager.login_view = "core.login"

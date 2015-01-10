@@ -13,7 +13,7 @@ from auth.core.models.user import User
 @core.route("/")
 @login_required
 def home():
-    return render_template("core_home.html")
+    return render_template("core/home.html")
 
 @core.route("/login", methods=["GET", "POST"])
 def login():
@@ -35,7 +35,7 @@ def login():
             flash("Your password was incorrect!", "danger")
     else:
         flash_errors(form)
-    return render_template("core_login.html", form=form)
+    return render_template("core/login.html", form=form)
 
 @core.route("/logout")
 @login_required
@@ -78,13 +78,13 @@ def register():
                 [new_user.email],
                 "[WHAuth] Welcome to WHAuth, Please Activate Your Account",
                 render_template(
-                    'core_email_registration.txt',
+                    'core/email_registration.txt',
                     username=new_user.username,
                     siteurl=url_for("core.home", _external=True),
                     activationurl=url_for("core.validate_registration", username=new_user.username, key=new_user.activation_key, _external=True)
                 ),
                 render_template(
-                    'core_email_registration.html',
+                    'core/email_registration.html',
                     username=new_user.username,
                     siteurl=url_for("core.home", _external=True),
                     activationurl=url_for("core.validate_registration", username=new_user.username, key=new_user.activation_key, _external=True)
@@ -104,11 +104,11 @@ def register():
         return redirect(post)
     else:
         flash_errors(form)
-    return render_template("core_register.html", form=form)
+    return render_template("core/register.html", form=form)
 
 @core.route("/register/validating")
 def post_register():
-    return render_template("core_post_register.html")
+    return render_template("core/post_register.html")
 
 @core.route("/register/validate/<username>/<key>")
 def validate_registration(username, key):
@@ -136,13 +136,13 @@ def forgotten_password():
             [user.email],
             "[WHAuth] Password Reset Link",
             render_template(
-                'core_email_registration.txt',
+                'core/email_registration.txt',
                 username=user.username,
                 siteurl=url_for("core.home", _external=True),
                 activationurl=url_for("core.reset_password", username=user.username, key=user.activation_key, _external=True)
             ),
             render_template(
-                'core_email_registration.html',
+                'core/email_registration.html',
                 username=user.username,
                 siteurl=url_for("core.home", _external=True),
                 activationurl=url_for("core.reset_password", username=user.username, key=user.activation_key, _external=True)
@@ -156,7 +156,7 @@ def forgotten_password():
         return redirect(url_for("core.login"))
     else:
         flash_errors(form)
-    return render_template('core_forgot_password.html', form=form)
+    return render_template('core/forgot_password.html', form=form)
 
 @core.route("/login/reset/<username>/<key>", methods=['GET', 'POST'])
 def reset_password(username, key):
@@ -171,12 +171,12 @@ def reset_password(username, key):
         return redirect(url_for('core.home'))
     else:
         flash_errors(form)
-    return render_template('core_reset_password.html', form=form)
+    return render_template('core/reset_password.html', form=form)
 
 @core.route("/profile")
 @login_required
 def profile():
-    return render_template('core_profile.html')
+    return render_template('core/profile.html')
 
 @core.route("/profile/change_password", methods=["GET", "POST"])
 @login_required
@@ -189,4 +189,4 @@ def change_password():
         return redirect(url_for('core.profile'))
     else:
         flash_errors(form)
-    return render_template('core_change_password.html', form=form)
+    return render_template('core/change_password.html', form=form)

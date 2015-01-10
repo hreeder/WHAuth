@@ -8,10 +8,12 @@ ACTIVE_ROLES.extend([
     'view-admin',
 
     'admin-view-users',
+    'admin-toggle-account-status'
 ])
 
 view_admin = Permission(RoleNeed('view-admin'))
 admin_view_users = Permission(RoleNeed('admin-view-users'))
+admin_toggle_account_status = Permission(RoleNeed('admin-toggle-account-status'))
 
 from auth.admin import views
 from auth.admin.views import users

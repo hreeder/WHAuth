@@ -9,7 +9,9 @@ from auth.core.models.user import User
 @view_admin.require(403)
 def dashboard():
     all_users = User.query.all()
+    inactive = User.query.filter_by(active=False).all()
     return render_template(
         "admin/dashboard.html",
-        user_count=len(all_users)
+        user_count=len(all_users),
+        inactive_count=len(inactive)
     )

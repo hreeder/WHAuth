@@ -30,7 +30,27 @@
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
       </ownedAttribute>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_2hWIwJQBEeSWg_9d4358Dg" name="Group"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_2hWIwJQBEeSWg_9d4358Dg" name="Group">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_tPAe0JmgEeSZkfGka_GItQ" name="id">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_9Kcn0JmgEeSZkfGka_GItQ" name="Name">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_pB03QJmhEeSZkfGka_GItQ" name="Description">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_cwQQkJmkEeSZkfGka_GItQ" name="Category" type="_vWlZ4JmhEeSZkfGka_GItQ"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_PMnP8JmlEeSZkfGka_GItQ" name="Visible">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_QzxbAJmlEeSZkfGka_GItQ" name="Open">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_TJofIJmlEeSZkfGka_GItQ" name="Leavable">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      </ownedAttribute>
+    </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_9Txe0JQBEeSWg_9d4358Dg" name="EveCharacter">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_Jj7sEJQGEeSWg_9d4358Dg" name="CharacterID">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
@@ -76,6 +96,64 @@
       <ownedEnd xmi:type="uml:Property" xmi:id="_RpHqgJQGEeSWg_9d4358Dg" name="eveApiKey" type="_BqJpMJQCEeSWg_9d4358Dg" association="_RpHqg5QGEeSWg_9d4358Dg">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RpHqgZQGEeSWg_9d4358Dg"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RpHqgpQGEeSWg_9d4358Dg" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_vWlZ4JmhEeSZkfGka_GItQ" name="GroupCategory">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Xjpo0JmkEeSZkfGka_GItQ" name="id">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_ZCxSMJmkEeSZkfGka_GItQ" name="Name">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_a5VLMJmkEeSZkfGka_GItQ" name="Order">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nAZDoJmkEeSZkfGka_GItQ" memberEnd="_nAZDoZmkEeSZkfGka_GItQ _nAYckJmkEeSZkfGka_GItQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nAZDoZmkEeSZkfGka_GItQ" name="groupCategory" type="_vWlZ4JmhEeSZkfGka_GItQ" association="_nAZDoJmkEeSZkfGka_GItQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nAZDopmkEeSZkfGka_GItQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nAZDo5mkEeSZkfGka_GItQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nAYckJmkEeSZkfGka_GItQ" name="group" type="_2hWIwJQBEeSWg_9d4358Dg" association="_nAZDoJmkEeSZkfGka_GItQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nAYckZmkEeSZkfGka_GItQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nAYckpmkEeSZkfGka_GItQ" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_VdqFUJmnEeSZkfGka_GItQ" name="GroupMembership">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_XW430JmnEeSZkfGka_GItQ" name="id">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_dc2JcJmnEeSZkfGka_GItQ" name="User" type="_1Sr9QJQBEeSWg_9d4358Dg"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_0kMfgJmnEeSZkfGka_GItQ" name="Group" type="_2hWIwJQBEeSWg_9d4358Dg"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_4QresJmvEeSZkfGka_GItQ" name="Pending">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_SAXI8JmwEeSZkfGka_GItQ" name="AppText">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Vh9ncJmwEeSZkfGka_GItQ" name="Admin">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_aDIskJmwEeSZkfGka_GItQ" memberEnd="_aDIskZmwEeSZkfGka_GItQ _aDG3YJmwEeSZkfGka_GItQ">
+      <name xsi:nil="true"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_aDIskZmwEeSZkfGka_GItQ" name="groupMembership" type="_VdqFUJmnEeSZkfGka_GItQ" association="_aDIskJmwEeSZkfGka_GItQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_aDIskpmwEeSZkfGka_GItQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_aDIsk5mwEeSZkfGka_GItQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_aDG3YJmwEeSZkfGka_GItQ" name="group" type="_2hWIwJQBEeSWg_9d4358Dg" association="_aDIskJmwEeSZkfGka_GItQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_aDG3YZmwEeSZkfGka_GItQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_aDG3YpmwEeSZkfGka_GItQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_adXKc5mwEeSZkfGka_GItQ" memberEnd="_adXKdJmwEeSZkfGka_GItQ _adXKcJmwEeSZkfGka_GItQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_adXKdJmwEeSZkfGka_GItQ" name="groupMembership" type="_VdqFUJmnEeSZkfGka_GItQ" association="_adXKc5mwEeSZkfGka_GItQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_adXKdZmwEeSZkfGka_GItQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_adXKdpmwEeSZkfGka_GItQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_adXKcJmwEeSZkfGka_GItQ" name="user" type="_1Sr9QJQBEeSWg_9d4358Dg" association="_adXKc5mwEeSZkfGka_GItQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_adXKcZmwEeSZkfGka_GItQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_adXKcpmwEeSZkfGka_GItQ" value="1"/>
       </ownedEnd>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_qWZj8JQDEeSWg_9d4358Dg">

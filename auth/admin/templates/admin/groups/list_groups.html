@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Groups{% endblock %}
+{% block heading %}Groups{% endblock %}
+{% block subheading %}Groups{% endblock %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{{ url_for('admin.dashboard') }}">
+            <i class="fa fa-dashboard"></i>
+            Admin
+        </a>
+    </li>
+    <li class="active">Groups</li>
+{% endblock %}

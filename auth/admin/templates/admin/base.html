@@ -53,19 +53,27 @@
                 <ul class="sidebar-menu">
                     <li{% if request.path == url_for('admin.dashboard') %} class="active"{% endif %}><a href="{{ url_for('admin.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
                     <li{% if request.path.startswith(url_for('admin.list_users')) %} class="active"{% endif %}><a href="{{ url_for('admin.list_users') }}"><i class="fa fa-user"></i> Users</a></li>
-                    <li class="treeview">
+                    <li class="treeview{% if request.path.startswith(url_for('admin.list_groups')) %} active{% endif %}">
                         <a href="">
                             <i class="fa fa-users"></i> Groups
                             <i class="pull-right fa fa-angle-left"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="">
+                            <li><a href="{{ url_for('admin.list_groups') }}">
                                 <i class="fa fa-angle-double-right"></i>
                                 All Groups
                             </a></li>
                             <li><a href="">
                                 <i class="fa fa-angle-double-right"></i>
                                 Add a Group
+                            </a></li>
+                            <li><a href="">
+                                <i class="fa fa-angle-double-right"></i>
+                                Group Categories
+                            </a></li>
+                            <li><a href="">
+                                <i class="fa fa-angle-double-right"></i>
+                                Add a Category
                             </a></li>
                         </ul>
                     </li>

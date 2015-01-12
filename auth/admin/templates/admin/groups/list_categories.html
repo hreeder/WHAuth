@@ -1,8 +1,8 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Groups{% endblock %}
-{% block heading %}Groups{% endblock %}
-{% block subheading %}Groups{% endblock %}
+{% block title %}Group Categories{% endblock %}
+{% block heading %}Group Categories{% endblock %}
+{% block subheading %}Group Categories{% endblock %}
 
 {% block breadcrumbs %}
     <li>
@@ -11,7 +11,8 @@
             Admin
         </a>
     </li>
-    <li class="active">Groups</li>
+    <li><a href="{{ url_for('admin.list_groups') }}">Groups</a></li>
+    <li class="active">Categories</li>
 {% endblock %}
 
 {% block extracss %}
@@ -24,7 +25,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#groups').DataTable();
+            $('#categories').DataTable();
         });
     </script>
 {% endblock %}
@@ -34,15 +35,12 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-body table-responsive">
-                    <table id="groups" class="display table table-bordered table-striped table-hover" cellspacing="0" width="100%">
+                    <table id="categories" class="display table table-bordered table-striped table-hover" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Category</th>
-                                <th>Visible</th>
-                                <th>Open</th>
-                                <th>Leavable</th>
+                                <th>Order</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -50,23 +48,17 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Category</th>
-                                <th>Visible</th>
-                                <th>Open</th>
-                                <th>Leavable</th>
+                                <th>Order</th>
                                 <th>Actions</th>
                             </tr>
                         </tfoot>
 
                         <tbody>
-                            {% for group in groups %}
+                            {% for category in categories %}
                                 <tr>
-                                    <td>{{ group.id }}</td>
-                                    <td>{{ group.name }}</td>
-                                    <td>{{ group.category.name }}</td>
-                                    <td>{{ group.visible }}</td>
-                                    <td>{{ group.open }}</td>
-                                    <td>{{ group.leavable }}</td>
+                                    <td>{{ category.id }}</td>
+                                    <td>{{ category.name }}</td>
+                                    <td>{{ category.order }}</td>
                                     <td></td>
                                 </tr>
                             {% endfor %}

@@ -10,7 +10,13 @@ class Group(db.Model):
     open = db.Column(db.Boolean)
     leavable = db.Column(db.Boolean)
 
-    parents = db.relationship('GroupParent', backref='group', lazy='dynamic', foreign_keys=[GroupParent.group_id])
+    @property
+    def parents(self):
+        return [parent.parent for parent in GroupParent.query.filter_by(group_id=self.id).all()]
+
+    @property
+    def children(self):
+        return [child.group for child in GroupParent.query.filter_by(parent_id=self.id).all()]
 
     def visible_to(self, user):
         if not self.visible:

@@ -5,7 +5,7 @@ from sqlalchemy import asc
 from auth import db
 from auth.admin import admin, admin_view_groups, admin_create_groups, admin_create_group_categories
 from auth.admin.forms.groups import NewGroupForm, NewCategoryForm
-from auth.groups.models import Group, GroupCategory
+from auth.groups.models import Group, GroupCategory, GroupParent
 from auth.utils import flash_errors
 
 @admin.route("/groups")
@@ -24,6 +24,7 @@ def list_groups():
 def add_group():
     form = NewGroupForm()
     form.category.choices = [(c.id, c.name) for c in GroupCategory.query.order_by(asc(GroupCategory.order)).all()]
+    form.parents.choices = [(g.id, g.name) for g in Group.query.order_by(asc(Group.name)).all()]
 
     if form.validate_on_submit():
         group = Group()
@@ -35,6 +36,15 @@ def add_group():
         group.leavable = form.leavable.data
 
         db.session.add(group)
+
+        # create parents
+        for parent_id in form.parents.data:
+            parent = GroupParent(
+                group_id=group.id,
+                parent_id=parent_id
+            )
+            db.session.add(parent)
+
         db.session.commit()
 
         return redirect(url_for('admin.list_groups'))

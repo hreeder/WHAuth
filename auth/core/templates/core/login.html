@@ -1,35 +1,25 @@
-{% extends "base.html" %}
+{% extends "external.html" %}
 {% block title %}Login{% endblock %}
+
 {% block main %}
-    <h2>Login</h2>
-    <form method="POST" class="form-horizontal">
-        <div class="well">
+    <div class="form-box" id="login-box">
+        <div class="header">Login to WHAuth</div>
+        <form action="" method="POST">
             {{ form.hidden_tag() }}
-            <div class="form-group">
-                {{ form.username.label(class="col-md-2") }}
-                <div class="col-md-10">
-                    {{ form.username(class="form-control") }}
+            <div class="body bg-gray">
+                <div class="form-group">
+                    {{ form.username(class="form-control", placeholder=form.username.label.text) }}
+                </div>
+                <div class="form-group">
+                    {{ form.password(class="form-control", placeholder=form.password.label.text) }}
                 </div>
             </div>
-            <div class="form-group">
-                {{ form.password.label(class="col-md-2") }}
-                <div class="col-md-10">
-                    {{ form.password(class="form-control") }}
-                </div>
+            <div class="footer">
+                <input type="submit" value="Login" class="btn btn-block bg-olive" />
+                <br/>
+                <a href="{{ url_for('core.register') }}" class="btn btn-info">Register Account</a>
+                <a href="{{ url_for('core.forgotten_password') }}" class="btn btn-warning pull-right">Forgot Password</a>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="submit" value="Login" class="btn btn-block btn-primary" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-3 col-md-offset-3">
-                <a href="{{ url_for('core.forgotten_password') }}" class="btn btn-block btn-warning">Forgot Password</a>
-            </div>
-            <div class="col-md-3">
-                <a href="{{ url_for('core.register') }}" class="btn btn-block btn-info">Register</a>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 {% endblock %}

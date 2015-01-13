@@ -1,15 +1,45 @@
 {% extends "base.html" %}
+
 {% block title %}Profile{% endblock %}
+{% block heading %}Your Profile{% endblock %}
+{% block subheading %}{{ current_user.get_display_name() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{{ url_for('core.home') }}">
+            <i class="fa fa-key"></i>
+            WHAuth
+        </a>
+    </li>
+    <li class="active">Profile</li>
+{% endblock %}
 
 {% block main %}
-    <h2>Your Profile</h2>
-    <ul>
-        <li><b>Username</b>: {{ current_user.username }}</li>
-        <li><b>Display Name</b>: {{ current_user.get_display_name() }}</li>
-        <li><b>E-Mail Address</b>: {{ current_user.email }}</li>
-        <li><b>Registration Date</b>: {{ current_user.registration_date }}</li>
-    </ul>
-
-    <h3>Actions</h3>
-    <a class="btn btn-info" href="/profile/change_password">Change Password</a>
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Account Information</h3>
+                </div>
+                <div class="box-body">
+                    <ul>
+                        <li><b>Username</b>: {{ current_user.username }}</li>
+                        <li><b>Display Name</b>: {{ current_user.get_display_name() }}</li>
+                        <li><b>E-Mail Address</b>: {{ current_user.email }}</li>
+                        <li><b>Registration Date</b>: {{ current_user.registration_date }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-2">
+            <div class="box box-info">
+                <div class="box-header">
+                    <h3 class="box-title">Actions</h3>
+                </div>
+                <div class="box-body">
+                    <a class="btn btn-block btn-info" href="/profile/change_password">Change Password</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

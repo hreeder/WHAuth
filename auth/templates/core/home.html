@@ -1,5 +1,19 @@
 {% extends "base.html" %}
+
 {% block title %}Home{% endblock %}
+{% block heading %}Welcome to WHAuth{% endblock %}
+{% block subheading %}{{ current_user.get_display_name() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{{ url_for('core.home') }}">
+            <i class="fa fa-key"></i>
+            WHAuth
+        </a>
+    </li>
+    <li class="active">Home</li>
+{% endblock %}
+
 {% block main %}
-    <h1>Welcome to WHAuth, {{ current_user.get_display_name() }}</h1>
+
 {% endblock %}

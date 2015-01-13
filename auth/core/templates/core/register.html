@@ -1,39 +1,27 @@
-{% extends "base.html" %}
+{% extends "external.html" %}
 {% block title %}Register{% endblock %}
 {% block main %}
-    <h2>Register</h2>
-    <form method="POST" class="form-horizontal">
-        <div class="well">
+    <div class="form-box" id="login-box">
+        <div class="header">Register</div>
+        <form action="" method="POST">
             {{ form.hidden_tag() }}
-            <div class="form-group">
-                {{ form.username.label(class="col-md-2") }}
-                <div class="col-md-10">
-                    {{ form.username(class="form-control") }}
+            <div class="body bg-gray">
+                <div class="form-group">
+                    {{ form.username(class="form-control", placeholder=form.username.label.text) }}
+                </div>
+                <div class="form-group">
+                    {{ form.email(class="form-control", placeholder=form.email.label.text) }}
+                </div>
+                <div class="form-group">
+                    {{ form.password(class="form-control", placeholder=form.password.label.text) }}
+                </div>
+                <div class="form-group">
+                    {{ form.confirm(class="form-control", placeholder=form.confirm.label.text) }}
                 </div>
             </div>
-            <div class="form-group">
-                {{ form.email.label(class="col-md-2") }}
-                <div class="col-md-10">
-                    {{ form.email(class="form-control") }}
-                </div>
+            <div class="footer">
+                <input type="submit" value="Register" class="btn btn-block bg-olive" />
             </div>
-            <div class="form-group">
-                {{ form.password.label(class="col-md-2") }}
-                <div class="col-md-10">
-                    {{ form.password(class="form-control") }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form.confirm.label(class="col-md-2") }}
-                <div class="col-md-10">
-                    {{ form.confirm(class="form-control") }}
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="submit" value="Register" class="btn btn-block btn-primary" />
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 {% endblock %}

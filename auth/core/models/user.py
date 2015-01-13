@@ -21,6 +21,11 @@ class User(db.Model, UserMixin):
 
     display_name = db.Column(db.String(64))
 
+    @property
+    def groups(self):
+        from auth.groups.models import GroupMembership
+        return [membership.group for membership in GroupMembership.query.filter_by(member_id=self.id).all()]
+
     def __init__(self, username=None, email=None, password=None):
         if username:
             self.username = username

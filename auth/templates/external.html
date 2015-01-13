@@ -18,6 +18,21 @@
     <![endif]-->
 </head>
 <body class="bg-black">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container">
+                {% for category, message in messages %}
+                    <div class="alert alert-{% if category != 'message' %}{{ category }}{% else %}danger{% endif %} alert-dismissable">
+                        <i class="fa fa-{% if category == 'success' %}check{% else %}ban{% endif %}"></i>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <b>Alert! </b>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
     {% block main %}
     {% endblock %}
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

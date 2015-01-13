@@ -15,6 +15,19 @@
     <li class="active">Add</li>
 {% endblock %}
 
+{% block extracss %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}"/>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{{ url_for('static', filename='js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#description').wysihtml5();
+        });
+    </script>
+{% endblock %}
+
 {% block main %}
     <div class="row">
         <div class="col-xs-12">
@@ -28,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             {{ form.description.label }}
-                            {{ form.description(class="form-control") }}
+                            {{ form.description(class="form-control", rows="5") }}
                         </div>
                         <div class="form-group">
                             {{ form.category.label }}

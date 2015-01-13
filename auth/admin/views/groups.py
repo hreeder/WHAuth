@@ -36,6 +36,7 @@ def add_group():
         group.leavable = form.leavable.data
 
         db.session.add(group)
+        db.session.commit()
 
         # create parents
         for parent_id in form.parents.data:

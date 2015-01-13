@@ -1,4 +1,5 @@
 from auth import db
+from auth.groups.models.parent import GroupParent
 
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -8,3 +9,9 @@ class Group(db.Model):
     visible = db.Column(db.Boolean)
     open = db.Column(db.Boolean)
     leavable = db.Column(db.Boolean)
+
+    parents = db.relationship('GroupParent', backref='group', lazy='dynamic', foreign_keys=[GroupParent.group_id])
+
+    def visible_to(self, user):
+        if not self.visible:
+            return False

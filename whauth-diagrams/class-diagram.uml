@@ -156,6 +156,24 @@
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_adXKcpmwEeSZkfGka_GItQ" value="1"/>
       </ownedEnd>
     </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_gPgrAJp7EeSmjcxBz7_bsg" name="Service"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_gTMRIJp7EeSmjcxBz7_bsg" name="GroupParent">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_p6rIwJp7EeSmjcxBz7_bsg" name="id">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_uhlpgJp7EeSmjcxBz7_bsg" name="Group" type="_2hWIwJQBEeSWg_9d4358Dg"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_ygVXAJp7EeSmjcxBz7_bsg" name="Parent" type="_2hWIwJQBEeSWg_9d4358Dg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_3u01IJp7EeSmjcxBz7_bsg" memberEnd="_3u01IZp7EeSmjcxBz7_bsg _3uuHcJp7EeSmjcxBz7_bsg">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_3u01IZp7EeSmjcxBz7_bsg" name="groupParent" type="_gTMRIJp7EeSmjcxBz7_bsg" association="_3u01IJp7EeSmjcxBz7_bsg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3u01Ipp7EeSmjcxBz7_bsg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3u01I5p7EeSmjcxBz7_bsg" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_3uuHcJp7EeSmjcxBz7_bsg" name="group" type="_2hWIwJQBEeSWg_9d4358Dg" association="_3u01IJp7EeSmjcxBz7_bsg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3uuugJp7EeSmjcxBz7_bsg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3uuugZp7EeSmjcxBz7_bsg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_qWZj8JQDEeSWg_9d4358Dg">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_qWx-cJQDEeSWg_9d4358Dg" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g"/>

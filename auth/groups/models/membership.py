@@ -1,3 +1,4 @@
+import datetime
 from auth import db
 
 class GroupMembership(db.Model):
@@ -7,6 +8,7 @@ class GroupMembership(db.Model):
     group_admin = db.Column(db.Boolean)
     app_pending = db.Column(db.Boolean)
     app_text = db.Column(db.Text)
+    last_updated = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
     @property
     def user(self):

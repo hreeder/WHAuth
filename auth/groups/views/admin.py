@@ -67,3 +67,21 @@ def reject_app(groupid, appid):
 
     flash('The application to %s by %s has been rejected' % (app.group.name, app.user.get_display_name()), 'danger')
     return redirect(url_for('groups.admin', groupid=groupid))
+
+
+@groups.route("/<groupid>/admin/<appid>/kick")
+@login_required
+def kick_member(groupid, appid):
+    group = Group.query.filter_by(id=groupid).first_or_404()
+
+    if not group.is_user_admin(current_user):
+        flash("You are not an admin of that group.", "danger")
+        return redirect(url_for('groups.list_own'))
+
+    app = GroupMembership.query.filter_by(id=appid, app_pending=False).first_or_404()
+
+    db.session.delete(app)
+    db.session.commit()
+
+    flash('%s has been removed from the group %s' % (app.user.get_display_name(), app.group.name), 'danger')
+    return redirect(url_for('groups.admin', groupid=groupid))

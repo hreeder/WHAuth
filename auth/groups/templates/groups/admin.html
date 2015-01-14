@@ -120,7 +120,9 @@
                                     <td>{{ member.user.get_display_name() }}</td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
+                                    <td>
+                                        <a href="{{ url_for('groups.kick_member', groupid=group.id, appid=member.id) }}" class="btn btn-xs btn-danger">Kick</a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>

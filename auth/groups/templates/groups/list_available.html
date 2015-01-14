@@ -55,7 +55,7 @@
                                                 {% endif %}
 
                                                 {% if group.is_user_admin(current_user) %}
-                                                    <a class="btn btn-xs btn-info" href="">Admin</a>
+                                                    <a class="btn btn-xs btn-info" href="{{ url_for('groups.admin', groupid=group.id) }}">Admin</a>
                                                 {% endif %}
                                             </td>
                                         </tr>

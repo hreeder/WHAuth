@@ -24,6 +24,10 @@ class Group(db.Model):
     def members(self):
         return [membership.user for membership in GroupMembership.query.filter_by(group_id=self.id, app_pending=False).all()]
 
+    @property
+    def pending_members(self):
+        return [membership.user for membership in GroupMembership.query.filter_by(group_id=self.id, app_pending=True).all()]
+
     def visible_to(self, user):
         # Superusers see all groups
         # TODO: Expand to accommodate roles system

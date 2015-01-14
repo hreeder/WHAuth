@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Group Admin{% endblock %}
+{% block heading %}Group Admin{% endblock %}
+{% block subheading %}{{ group.name }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{{ url_for('core.home') }}">
+            <i class="fa fa-key"></i>
+            WHAuth
+        </a>
+    </li>
+    <li><a href="{{ url_for('groups.list_own') }}">Groups</a></li>
+    <li class="active">{{ group.name }}</li>
+{% endblock %}
+
+{% block extracss %}
+    <link href="{{ url_for('static', filename='css/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{{ url_for('static', filename='js/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#members').DataTable();
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-xs-12 col-md-3">
+            <div class="box box-solid box-info">
+                <div class="box-header">
+                    <h3 class="box-title">Group Information</h3>
+                </div>
+                <div class="box-body">
+                    <ul>
+                        <li><b>Group Name</b>: {{ group.name }}</li>
+                        <li><b>Description</b>: {{ group.description|safe }}</li>
+                        <li>
+                            {% if group.open %}
+                                <b>Join URL</b>:
+                            {% else %}
+                                <b>Apply URL</b>: {{ url_for('groups.apply', groupid=group.id, _external=True)|urlize }}
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-9">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Pending Applications ({{ group.pending_members|length }})</h3>
+                </div>
+                {% if group.pending_members|length > 0 %}
+                <div class="box-body no-padding">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Corp</th>
+                                <th>Alliance</th>
+                                <th>Application Text</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for app in pending %}
+                                <tr>
+                                    <td>{{ app.user.get_display_name() }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{ app.app_text|safe }}</td>
+                                    <td>
+                                        <a class="btn btn-xs btn-primary" href="{{ url_for('groups.accept_app', groupid=group.id, appid=app.id) }}">Accept</a>
+                                        <a class="btn btn-xs btn-warning" href="{{ url_for('groups.reject_app', groupid=group.id, appid=app.id) }}">Reject</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Group Members ({{ group.members|length }})</h3>
+                </div>
+                <div class="box-body table-responsive">
+                    <table id="members" class="display table table-bordered table-striped table-hover" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Corp</th>
+                                <th>Alliance</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Member</th>
+                                <th>Corp</th>
+                                <th>Alliance</th>
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+
+                        <tbody>
+                            {% for member in members %}
+                                <tr>
+                                    <td>{{ member.user.get_display_name() }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,6 +1,19 @@
 {% extends "base.html" %}
+
 {% block title %}Your Groups{% endblock %}
+{% block heading %}Your Groups{% endblock %}
+{% block subheading %}Groups you are a member of{% endblock %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{{ url_for('core.home') }}">
+            <i class="fa fa-key"></i>
+            WHAuth
+        </a>
+    </li>
+    <li class="active">Groups</li>
+{% endblock %}
 
 {% block main %}
-    <h2>Your Groups</h2>
+
 {% endblock %}

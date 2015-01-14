@@ -2,6 +2,7 @@ from auth import db
 from auth.groups.models.membership import GroupMembership
 from auth.groups.models.parent import GroupParent
 
+
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
@@ -21,11 +22,11 @@ class Group(db.Model):
 
     @property
     def members(self):
-        return [membership.user for membership in GroupMembership.query.filter_by(group_id=self.id).all()]
+        return [membership.user for membership in GroupMembership.query.filter_by(group_id=self.id, app_pending=False).all()]
 
     def visible_to(self, user):
         # Superusers see all groups
-        # TODO: Expand to accomodate roles system
+        # TODO: Expand to accommodate roles system
         if user.superuser:
             return True
 
@@ -45,3 +46,33 @@ class Group(db.Model):
         # True means there is an intersection, and thus the user can see this group
         # False / No Intersection means the user is not in any valid parent groups
         return bool(parent_ids & user_group_ids)
+
+    def joinable_for(self, user):
+        if user.superuser:
+            return True
+
+        if not self.parents:
+            return True
+
+        parent_ids = set([int(parent.id) for parent in self.parents])
+        user_group_ids = set([int(group.id) for group in user.groups])
+
+        return bool(parent_ids & user_group_ids)
+
+    def is_user_admin(self, user):
+        # Superusers are admins of all groups
+        # TODO: Expand to accommodate roles system
+        if user.superuser:
+            return True
+        return bool(GroupMembership.query.filter_by(group_id=self.id, member_id=user.id, group_admin=True, app_pending=False).first())
+
+    def get_member_status(self, user):
+        membership = GroupMembership.query.filter_by(group_id=self.id, member_id=user.id).first()
+        if not membership:
+            return ""
+        elif membership.group_admin:
+            return "Admin"
+        elif membership.app_pending:
+            return "Pending"
+        else:
+            return "Member"

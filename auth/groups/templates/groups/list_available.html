@@ -1,7 +1,71 @@
 {% extends "base.html" %}
+
 {% block title %}Available Groups{% endblock %}
+{% block heading %}Available Groups{% endblock %}
+{% block subheading %}Groups you can (apply to) join{% endblock %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{{ url_for('core.home') }}">
+            <i class="fa fa-key"></i>
+            WHAuth
+        </a>
+    </li>
+    <li><a href="{{ url_for('groups.list_own') }}">Groups</a></li>
+    <li class="active">Available</li>
+{% endblock %}
 
 {% block main %}
-    <h2>Available Groups</h2>
+    {% for row in categories|batch(2) %}
+        <div class="row">
+            {% for category in row %}
+                <div class="col-xs-12 col-md-6">
+                    <div class="box box-solid box-info">
+                        <div class="box-header">
+                            <h3 class="box-title">{{ category.name }}</h3>
+                        </div>
+                        <div class="box-body no-padding">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for group in category.groups %}
+                                        <tr>
+                                            <td>{{ group.name }}</td>
+                                            <td>{{ group.description|safe }}</td>
+                                            <td>{{ group.get_member_status(current_user) }}</td>
+                                            <td>
+                                                {% if current_user.in_group(group) %}
+                                                    {% if group.leavable %}
+                                                        <a class="btn btn-xs btn-danger" href="">Leave</a>
+                                                    {% endif %}
+                                                {% elif group.get_member_status(current_user) == "Pending" %}
+                                                {% else %}
+                                                    {% if group.open %}
+                                                        <a class="btn btn-xs btn-primary" href="">Join</a>
+                                                    {% else %}
+                                                        <a class="btn btn-xs btn-primary" href="{{ url_for('groups.apply', groupid=group.id) }}">Apply</a>
+                                                    {% endif %}
+                                                {% endif %}
 
+                                                {% if group.is_user_admin(current_user) %}
+                                                    <a class="btn btn-xs btn-info" href="">Admin</a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
 {% endblock %}

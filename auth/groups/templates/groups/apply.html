@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Apply to Group{% endblock %}
+{% block heading %}Apply to Group{% endblock %}
+{% block subheading %}{{ group.name }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{{ url_for('core.home') }}">
+            <i class="fa fa-key"></i>
+            WHAuth
+        </a>
+    </li>
+    <li><a href="{{ url_for('groups.list_own') }}">Groups</a></li>
+    <li class="active">Apply to Group</li>
+{% endblock %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}"/>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{{ url_for('static', filename='js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#reason').wysihtml5();
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <form action="" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="reason">Application Text</label>
+                            {{ form.reason(class="form-control", rows=5) }}
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" class="btn btn-primary" value="Submit Application"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

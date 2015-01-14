@@ -24,7 +24,7 @@ class User(db.Model, UserMixin):
     @property
     def groups(self):
         from auth.groups.models import GroupMembership
-        return [membership.group for membership in GroupMembership.query.filter_by(member_id=self.id).all()]
+        return [membership.group for membership in GroupMembership.query.filter_by(member_id=self.id, app_pending=False).all()]
 
     def __init__(self, username=None, email=None, password=None):
         if username:
@@ -75,6 +75,10 @@ class User(db.Model, UserMixin):
 
     def get_roles(self):
         return []
+
+    def in_group(self, group):
+        from auth.groups.models import GroupMembership
+        return bool(GroupMembership.query.filter_by(group_id=group.id, member_id=self.id, app_pending=False).first())
 
 @login_manager.user_loader
 def load_user(userid):

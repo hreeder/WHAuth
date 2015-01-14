@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/hreeder/WHAuth.png?label=ready&title=Ready)](https://waffle.io/hreeder/WHAuth)
 WHAuth
 ======
 

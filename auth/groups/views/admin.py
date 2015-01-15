@@ -2,17 +2,15 @@
 # groups/views/admin.py
 # Contains view methods for group leader administration
 #
+import datetime
 
 from flask import render_template, redirect, url_for, flash
 from flask.ext.login import login_required, current_user
-from sqlalchemy import asc
 
 from auth import db
-from auth.utils import flash_errors
 
 from auth.groups import groups
-from auth.groups.models import Group, GroupCategory, GroupMembership
-from auth.groups.forms import ApplyToGroupForm
+from auth.groups.models import Group, GroupMembership
 
 @groups.route("/<groupid>/admin")
 @login_required
@@ -44,6 +42,7 @@ def accept_app(groupid, appid):
 
     app = GroupMembership.query.filter_by(id=appid, app_pending=True).first_or_404()
     app.app_pending=False
+    app.last_updated=datetime.datetime.utcnow()
 
     db.session.add(app)
     db.session.commit()

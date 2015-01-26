@@ -2,6 +2,8 @@
 WHAuth
 ======
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hreeder/WHAuth?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 An Authentication and Authorization system for wormhole corps/alliances within EVE Online
 
 Heavily in development at the current time.
